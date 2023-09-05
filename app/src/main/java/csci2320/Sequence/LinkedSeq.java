@@ -1,6 +1,8 @@
 package csci2320.Sequence;
 
-public class LinkedSeq<E> implements Seq<E> {
+import java.util.Iterator;
+
+public class LinkedSeq<E> implements Seq<E>, Iterable {
 
     private Node<E> head = null;
     private Node<E> tail = null;
@@ -48,5 +50,22 @@ public class LinkedSeq<E> implements Seq<E> {
     @Override
     public boolean isEmpty() {
         return numElems == 0;
+    }
+
+    @Override
+    public Iterator iterator() {
+        return new Iterator<E>() {
+            private Node<E> rover = head;
+
+            public E next() {
+                E top = rover.data;
+                rover = rover.next;
+                return top;
+            }
+
+            public boolean hasNext() {
+                return rover != null;
+            }
+        };
     }
 }
